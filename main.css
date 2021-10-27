@@ -1,0 +1,39 @@
+#mapid { height: 80vh; }
+
+body {
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+
+	font-family: sans-serif;
+}
+
+.button-deck button {
+		width: 300px;
+		height: 30px;
+
+		margin-bottom: 2rem;
+}
+
+ul.nearby-wcs {
+		padding-left: 0;
+		font-size: 1.2em;
+}
+
+ul.nearby-wcs li{
+		list-style: none;
+}
+
+
+
+.button-deck[data-state="default"] :not(.state-default ){
+	display: none;	
+}
+
+.button-deck[data-state="add"] :not(.state-add ){
+	display: none;	
+}
+
+.button-deck[data-state="find"] :not(.state-find ){
+	display: none;	
+}

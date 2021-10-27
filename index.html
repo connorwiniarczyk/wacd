@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+		<head>
+			<meta charset="utf-8"/>
+			<!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/> -->
+			<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" crossorigin=""/>
+
+			<!-- Make sure you put this AFTER Leaflet's CSS -->
+			<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+			
+			<link rel="stylesheet" href="main.css" crossorigin=""/>
+			<script src="main.js" crossorigin=""></script>
+
+		</head>
+		<body>
+			<h1>WACD</h1>
+			<h2>The Water Closet Directory</h2>
+
+			<div class="button-deck" data-state="default">
+				<button id="add" class="state-default">NEW</button>
+				<button id="find" class="state-default">FIND</button>
+				<span class="state-add">Click on a location to add a Water Closet</span>
+				<span class="state-find">Click on a your location</span>
+			</div>
+			<div id="mapid"></div>
+		</body>
+</html>
