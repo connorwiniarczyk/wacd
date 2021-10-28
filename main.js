@@ -17,6 +17,10 @@ function split_list(list, keys){
 	return output
 }
 
+async function goto_wc(name){
+	console.log(name)
+}
+
 async function find_wc(map){
 	//change the display state of the button deck
 	document.querySelector(".button-deck").setAttribute("data-state", "find")	
@@ -36,9 +40,9 @@ async function find_wc(map){
 	console.log(result)
 
 	// display the result in a popup
-	list = result.map(({name, distance}) => `<li><strong>${name}</strong>  ${distance} km away</li>`)
+	list = result.map(({name, distance}) => `<li onclick="goto_wc(\'${name}\')"><strong>${name}</strong>  ${distance} km away</li>`)
 	console.log(list)
-		list = `<h2>Nearby Water Closets</h2><ul class="nearby-wcs">${list.join("")}</ul>`
+		list = `<h2>Nearby Restrooms</h2><ul class="nearby-wcs">${list.join("")}</ul>`
 	popup = L.popup()
 		.setLatLng(nextclick.latlng)
 		.setContent(list)
