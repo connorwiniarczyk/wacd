@@ -19,6 +19,8 @@ function split_list(list, keys){
 
 async function goto_wc(name){
 	console.log(name)
+
+	let result = window.fetch(`/api/get`)
 }
 
 async function find_wc(map){
@@ -57,7 +59,7 @@ async function find_wc(map){
 async function get_new_wc_info(map){
 
 	//change the display state of the button deck
-	document.querySelector(".button-deck").setAttribute("data-state", "find")	
+	document.querySelector(".button-deck").setAttribute("data-state", "add")	
 
 	nextclick = await new Promise((resolve, reject) => map.once('click', resolve))
 
@@ -105,7 +107,7 @@ window.onload = async function(){
 				.openOn(mymap);
 		}
 
-		const mymap = L.map('mapid').setView([42.3611, -71.057], 13);
+		const mymap = L.map('mapid').setView([40.7236, -73.98982], 13);
 
 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 	    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -116,7 +118,6 @@ window.onload = async function(){
 	    accessToken: 'pk.eyJ1IjoiY29ubm9yd2luaWFyY3p5ayIsImEiOiJja3Y1Y2Q4eGwxOHN1Mndubmlza2pzdDh1In0.xwVVCo4ihm82PjVnnEMtRA'
 	}).addTo(mymap);
 
-	var marker = L.marker([51.5, -0.09]).addTo(mymap);
 
 	locations = await load_locations()
 	 // console.log("test")
