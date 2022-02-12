@@ -29,6 +29,14 @@ def method(name):
 # API METHODS
 # -----------
 
+@method("add")
+def add(args):
+    r.geoadd("locations", (args.get("longitude"), args.get("latitude"), args.get("name")))
+    r.sadd(f"reviews:{args.get('name')}", args.get('review'))
+    return ""
+
+
+
 @method("water-closets")
 def water_closets(args):
     output = [( name, long, lat, get_reviews(name)) for [name, (long, lat)] in geo_members("locations")]
