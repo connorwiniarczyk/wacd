@@ -53,19 +53,22 @@ def get_all(args):
 
 @method("find")
 def find(args):
+
+    radius = "10"
     latitude = args.get("latitude")
     longitude = args.get("longitude")
 
     result = r.geosearch("locations",
         longitude = longitude,
         latitude = latitude,
-        radius = "22000",
+        radius = radius,
         unit = "km",
         withdist = True,
         sort = "ASC",
     )
 
     locations = [{"name": name, "distance": distance} for [name, distance] in result]
+    return json.dumps(locations)
 
 
 """

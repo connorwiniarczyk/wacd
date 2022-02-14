@@ -11,15 +11,13 @@ async function find_wc(map){
 	 // event in nextclick
 	nextclick = await new Promise((resolve, reject) => map.once('click', resolve))
 	 
-	 console.log(nextclick)
 	lat = nextclick.latlng.lat
 	lng = nextclick.latlng.lng
 
-	let result = await window.fetch(`/api/find?long=${lng}&lat=${lat}`)
-		.then(res => res.text())
-		.then(text => split_list(text.split("\n"), ["name", "distance"]))
+	let result = await window.fetch(`/api/find?longitude=${lng}&latitude=${lat}`)
+		.then(res => res.json())
+		.catch(console.log)
 
-	console.log(result)
 
 	// display the result in a popup
 	list = result.map(({name, distance}) => `<li onclick="goto_wc(\'${name}\')"><strong>${name}</strong>  ${distance} km away</li>`)
@@ -62,14 +60,18 @@ async function get_new_wc_info(map){
 
 	return [null, {name, review, latlng}, popup]
 
-
 }
 
 async function submit_wc({ name, review, latlng }) {
-	query = `/api/add?name=${name}&long=${latlng.lng}&lat=${latlng.lat}`
-	query = review == "" ? query : query + `&review=${review}`
-
-	return window.fetch(query).then(res => res.text()).then(console.log)
+	return window.fetch('/api/add', {
+		method: "post", 
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			name, review, latitude: latlng.lat, longitude: latlng.lng
+		})
+	})
 }
 
 async function add_wc(map){
