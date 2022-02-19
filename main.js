@@ -1,21 +1,3 @@
-// const map_click_event = new Event("map_click");
-// window.addEventListener("map_click", function(e){ console.log(e) });
-//
-
-function split_list(list, keys){
-	 chunksize = keys.length
-	 let output = []
-
-	 n = 0
-	 while( n + chunksize <= list.length ) {
-		 nextentry = {}
-		 list.slice(n, n + chunksize).forEach((value, i) => nextentry[keys[i]] = value)
-		 output.push(nextentry)
-		 n += chunksize
-	 }
-
-	return output
-}
 
 async function goto_wc(name){
 	console.log(name)
@@ -31,15 +13,13 @@ async function find_wc(map){
 	 // event in nextclick
 	nextclick = await new Promise((resolve, reject) => map.once('click', resolve))
 	 
-	 console.log(nextclick)
 	lat = nextclick.latlng.lat
 	lng = nextclick.latlng.lng
 
-	let result = await window.fetch(`/api/find?long=${lng}&lat=${lat}`)
-		.then(res => res.text())
-		.then(text => split_list(text.split("\n"), ["name", "distance"]))
+	let result = await window.fetch(`/api/find?longitude=${lng}&latitude=${lat}`)
+		.then(res => res.json())
+		.catch(console.log)
 
-	console.log(result)
 
 	// display the result in a popup
 	list = result.map(({name, distance}) => `<li onclick="goto_wc(\'${name}\')"><strong>${name}</strong>  ${distance} km away</li>`)
@@ -82,14 +62,18 @@ async function get_new_wc_info(map){
 
 	return [null, {name, review, latlng}, popup]
 
-
 }
 
 async function submit_wc({ name, review, latlng }) {
-	query = `/api/add?name=${name}&long=${latlng.lng}&lat=${latlng.lat}`
-	query = review == "" ? query : query + `&review=${review}`
-
-	return window.fetch(query).then(res => res.text()).then(console.log)
+	return window.fetch('/api/add', {
+		method: "post", 
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			name, review, latitude: latlng.lat, longitude: latlng.lng
+		})
+	})
 }
 
 async function add_wc(map){
@@ -99,16 +83,24 @@ async function add_wc(map){
 
 }
 
+// Add information about a watercloset to the map as a popup
+function add_wc_popup(map, wc) {
+	L.marker([wc.latitude, wc.longitude]).bindPopup(`<h2>${wc.name}</h2>\n${wc.review}`).addTo(map)
+}
+
 window.onload = async function(){
-		function onMapClick(e) {
-			popup
-				.setLatLng(e.latlng)
-				.setContent("You clicked the map at <input type='text' style='width: 100%'/>" + e.latlng.toString())
-				.openOn(mymap);
-		}
 
-		const mymap = L.map('mapid').setView([40.7236, -73.98982], 13);
+	// possible default views for the map, specified as:
+	// [[latitude, longitude], zoom_level]
+	const views = {
+		nyc: [[40.7236, -73.98982], 13],  // Manhattan
+		boston: [[42.3611, -71.057], 13], // Boston
+	}
 
+	// Create the map and set the default view
+	const mymap = L.map('mapid').setView(...views.nyc);
+
+	// Download map data from OpenStreetMap and add it to the map
 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 	    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 	    maxZoom: 18,
@@ -118,37 +110,18 @@ window.onload = async function(){
 	    accessToken: 'pk.eyJ1IjoiY29ubm9yd2luaWFyY3p5ayIsImEiOiJja3Y1Y2Q4eGwxOHN1Mndubmlza2pzdDh1In0.xwVVCo4ihm82PjVnnEMtRA'
 	}).addTo(mymap);
 
+	// Download Water Closet data from the API and add them to the map as popups
+	const water_closets = await get_water_closets()
+	water_closets.forEach(wc => add_wc_popup(mymap, wc))
 
-	locations = await load_locations()
-	 // console.log("test")
-	// console.log(locations)
-
-	// locations.forEach(console.table)
-	locations.forEach(({name, longitude, latitude, review}) => L.marker([latitude, longitude]).bindPopup(`<h2>${name}</h2>\n${review}`).addTo(mymap))
-	// var popup = L.popup();
-
+	// register click events for the two buttons
 	document.getElementById("add").onclick = () => add_wc(mymap)
 	document.getElementById("find").onclick = () => find_wc(mymap)
 }
 
-
-console.log(split_list(["test", "one", "two", "three"], ["first", "second"]))
-
-async function load_locations(){
-	 locations = await window.fetch("/api/getall").then(res => res.text()).catch(console.log)	
-
-	 // console.log(locations)
-	 locations = split_list(locations.split("\n"), ["name", "longitude", "latitude"])
-	 console.log(locations)
-
-	 output_with_reviews = []
-
-	 for (info of locations) {
-		  console.log(info)
-		  await window.fetch(`/api/get?name=${info.name}`)
-				.then(res => res.text())
-				.then(review => output_with_reviews.push({review, ...info}))
-	 }
-
-	 return output_with_reviews
+// Get the list of water closets from the API
+function get_water_closets(){
+	return window.fetch("/api/water-closets")
+		.then(res => res.json())
+		.catch(console.log)
 }
