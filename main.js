@@ -88,7 +88,18 @@ function add_wc_popup(map, wc) {
 	L.marker([wc.latitude, wc.longitude]).bindPopup(`<h2>${wc.name}</h2>\n${wc.review}`).addTo(map)
 }
 
+function get_position() {
+	return new Promise(function(resolve, reject){
+		if(!window.navigator.geolocation) reject("no access to location data")
+		window.navigator.geolocation.getCurrentPosition(success => resolve(success.coords), reject)
+	})
+}
+
 window.onload = async function(){
+
+	const position = await get_position()
+	const user_view = [[position.latitude, position.longitude], 13]
+	console.log(position.accuracy)
 
 	// possible default views for the map, specified as:
 	// [[latitude, longitude], zoom_level]
@@ -98,7 +109,8 @@ window.onload = async function(){
 	}
 
 	// Create the map and set the default view
-	const mymap = L.map('mapid').setView(...views.nyc);
+	// const mymap = L.map('mapid').setView(...views.nyc);
+	const mymap = L.map('mapid').setView(...user_view);
 
 	// Download map data from OpenStreetMap and add it to the map
 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
