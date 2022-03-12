@@ -81,7 +81,6 @@ if __name__ == "__main__":
         exit(1)
 
     method = sys.argv[1]
-
     method_function = method_table.get(method, None)
 
     try:
@@ -89,11 +88,10 @@ if __name__ == "__main__":
     except:
         input = {}
 
+
     if method_function == None:
         print("not a valid method")
         exit(1)
 
     result = method_function(input)
     print(result)
-
-
