@@ -1,3 +1,18 @@
+service-init:
+	sudo cp deployment/redis /etc/rc.d
+	sudo cp deployment/wacd /etc/rc.d
+
+service-deinit: down
+	sudo rm /etc/rc.d/wacd
+	sudo rm /etc/rc.d/redis
+
+up: service-init
+	service wacd start
+	service redis start
+
+down:
+	service wacd stop
+	service redis stop
 
 
 load: data/

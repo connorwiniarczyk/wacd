@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# PROVIDE: redis
+# REQUIRE: LOGIN
+# KEYWORDS: shutdown
+
+. /etc/rc.subr
+
+name=redis
+rcvar=redis_enable
+
+# load_rc_config $redis
+
+redis_enable="YES"
+redis_home_dir="/home/connor"
+
+pidfile="/var/run/$(name).pid"
+# procname=/usr/local/bin/redis-server
+command=/usr/local/bin/redis-server
+
+run_rc_command "$1"

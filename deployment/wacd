@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# PROVIDE: wacd
+# REQUIRE: LOGIN
+# KEYWORDS: shutdown
+
+. /etc/rc.subr
+
+name=wacd
+rcvar=wacd_enable
+pidfile="/var/run/$name.pid"
+
+wacd_enable="YES"
+wacd_home_dir="/home/connor/wacd"
+
+command=/usr/sbin/daemon
+procname=/home/connor/.cargo/bin/serv
+command_args="-f -p ${pidfile} ${procname} -p 80 /home/connor/wacd"
+
+
+run_rc_command "$1"
