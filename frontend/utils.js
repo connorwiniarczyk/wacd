@@ -17,10 +17,16 @@ API.add_wc = function({ name, review, location }){
 	})
 }
 
-API.find = function({lat, lng}){
-	return window.fetch(`/api/find?longitude=${lng}&latitude=${lat}`)
-		.then(res => res.json())
-		.catch(console.log)
+API.find = function({latitude, longitude}){
+	return window.fetch(`/api/find`, {
+		method: "post", 
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({ latitude, longitude }),
+	})
+	.then(res => res.json())
+	.catch(console.log)
 }
 
 const popup = {}

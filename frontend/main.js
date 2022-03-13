@@ -43,9 +43,9 @@ UI.add_button = async function() {
 }
 
 
-async function display_nearby(lat, lng) {
-	const nearby = await API.find({lat, lng});
-	popup.nearby({lat, lng}, nearby).openOn(MAP)
+async function display_nearby(latitude, longitude) {
+	const nearby = await API.find({latitude, longitude});
+	popup.nearby({lat: latitude, lng: longitude}, nearby).openOn(MAP)
 }
 
 
