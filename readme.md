@@ -41,5 +41,5 @@ serv .
 ```
 
 To test this installation, open a web browser and navigate to
-[localhost:4000](localhost:4000)
+[http://localhost:4000](http://localhost:4000)
 
