@@ -10,6 +10,13 @@ WaCD is a barely-ironic-anymore crowdsourced database of public restrooms
 
 ## Setting Up a Development Environment
 
+Follow these instructions if you want to contribute to the WACD source code
+and would like to run a local version of it. This should be done inside of a 
+mac or linux terminal. If on windows considering running
+[WSL](https://docs.microsoft.com/en-us/windows/wsl/install)
+or a linux virtual machine. You will need to install the rust toolchain in
+order to compile the very esoteric HTTP server I chose to use.
+
 ```sh
 # install rust from this url: https://rustup.rs/
 # (needed to compile the webserver)
@@ -18,6 +25,9 @@ rustup update
 
 # install the webserver serv
 cargo install --git https://connorwiniarczyk/serv.git
+
+# at this point, close and reopen your terminal inorder to reset your PATH
+# variable. Make sure it includes the $HOME/.cargo/bin directory
 
 # install redis (the database)
 # this works on debian based linux distributions, if that doesn't apply, find
@@ -36,7 +46,7 @@ cd wacd
 make load
 
 # Start the webserver
-serv .
+serv -p 4000 .
 
 ```
 
