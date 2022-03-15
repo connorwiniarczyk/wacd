@@ -17,6 +17,8 @@ mac or linux terminal. If on windows considering running
 or a linux virtual machine. You will need to install the rust toolchain in
 order to compile the very esoteric HTTP server I chose to use.
 
+[https://github.com/connorwiniarczyk/serv](https://github.com/connorwiniarczyk/serv)
+
 ```sh
 # install rust from this url: https://rustup.rs/
 # (needed to compile the webserver)
