@@ -1,6 +1,6 @@
 # WaCD
 
-## The Water Closet Directory
+### The Water Closet Directory
 
 Like Yelp, but for toilets
 
