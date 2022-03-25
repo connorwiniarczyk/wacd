@@ -1,4 +1,9 @@
-#mapid { height: 80vh; }
+/* #mapid { height: 80vh; } */
+
+
+.map-main {
+	height: 80vh;
+}
 
 body {
 	--bg-color: #33AAEE;
@@ -64,4 +69,14 @@ ul.nearby-wcs li{
 
 .button-deck[data-state="find"] :not(.state-find ){
 	display: none;	
+}
+
+.map-focus {
+	height: 100%;
+}
+
+.map-container {
+	width: 100%;
+	height: 20vh;
+	border: 1px solid black;
 }

@@ -27,19 +27,19 @@ UI.add_button = async function() {
 
 	nextclick = await new Promise((resolve, reject) => MAP.once('click', resolve));
 	popup.new_wc(nextclick.latlng).openOn(MAP);
-	await new Promise((resolve, reject) => document.querySelector(".new-wc button.test").onclick = resolve)
+	await new Promise((resolve, reject) => document.querySelector("form.new-wc").onsubmit = resolve)
 	console.log("resolved")
 
-	// extract data from form
+	// extranew-wc ct data from form
 	name = document.querySelector(".new-wc input.name").value
 	review = document.querySelector(".new-wc textarea.review").value
-	location = nextclick.latlng
+	const wc_location = nextclick.latlng
 
 	document.querySelector(".button-deck").setAttribute("data-state", "default")	
 
 	if (name == "") { console.log("name cannot be empty"); return }
 
-	await API.add_wc({name, review, location})
+	await API.add_wc({name, review, wc_location})
 }
 
 

@@ -5,14 +5,14 @@ API.get_water_closets = function() {
 		.catch(console.log)
 }
 
-API.add_wc = function({ name, review, location }){
+API.add_wc = function({ name, review, wc_location }){
 	return window.fetch('/api/add', {
 		method: "post", 
 		headers: {
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify({
-			name, review, latitude: location.lat, longitude: location.lng
+			name, review, latitude: wc_location.lat, longitude: wc_location.lng
 		})
 	})
 }
@@ -40,7 +40,7 @@ popup.nearby = function(location, list) {
 } 
 
 popup.new_wc = function(location) {
-	const content = `<div class="new-wc"> <input class="name", required, type="text" style="width: 300px;" placeholder="Name"> <textarea class="review" rows="5", style="width: 100%;" placeholder="Review"></textarea> <button class="test">Submit</button></div>`
+	const content = `<form action="#" class="new-wc"> <input class="name", required, type="text" style="width: 300px;" placeholder="Name"> <textarea class="review" rows="5", style="width: 100%;" placeholder="Review"></textarea> <input class="submit" type="submit" value="Submit"></form>`
 	return L.popup()
 		.setContent(content)
 		.setLatLng(nextclick.latlng)
