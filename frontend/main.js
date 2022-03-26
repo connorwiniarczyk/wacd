@@ -51,7 +51,7 @@ async function display_nearby(latitude, longitude) {
 
 // Add information about a watercloset to the map as a popup
 function add_wc_popup(map, wc) {
-	L.marker([wc.latitude, wc.longitude]).bindPopup(`<h2>${wc.name}</h2>\n${wc.review}`).addTo(map)
+	L.marker([wc.latitude, wc.longitude]).bindPopup(`<h2>${wc.name}</h2>\n${wc.review}<hr/><a href="/wc/${encodeURIComponent(wc.name)}">details</a>`).addTo(map)
 }
 
 function get_position() {

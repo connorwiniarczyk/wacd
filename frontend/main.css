@@ -1,18 +1,30 @@
-/* #mapid { height: 80vh; } */
-
-
 .map-main {
 	height: 80vh;
+	width: 100%;
 }
 
 body {
-	--bg-color: #33AAEE;
+	--bg-color: #44BBEE;
 	max-width: 1200px;
 	margin-left: auto;
 	margin-right: auto;
 
 	font-family: sans-serif;
 	background: var(--bg-color);
+
+	padding: 0.5rem;
+}
+
+
+main {
+	background-color: white;
+	padding: 1rem;
+	border-radius: 0.5rem;
+
+	max-width: 40rem;
+	margin-left: auto;
+	margin-right: auto;
+
 }
 
 header.header {
@@ -22,7 +34,7 @@ header.header {
 }
 
 header.header h1 {
-	margin-bottom: 0.5rem;
+	/* margin-bottom: 0.5rem; */
 }
 
 .header h2 {
@@ -78,5 +90,5 @@ ul.nearby-wcs li{
 .map-container {
 	width: 100%;
 	height: 20vh;
-	border: 1px solid black;
+	margin-bottom: 3rem;
 }

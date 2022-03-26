@@ -29,6 +29,18 @@ API.find = function({latitude, longitude}){
 	.catch(console.log)
 }
 
+API.get = function(name){
+	return window.fetch(`/api/get`, {
+		method: "post", 
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({ name }),
+	})
+	.then(res => res.json())
+	.catch(console.log)
+}
+
 const popup = {}
 
 popup.nearby = function(location, list) {

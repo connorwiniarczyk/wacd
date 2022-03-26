@@ -13,8 +13,11 @@ def geo_members(key):
 
 def get_reviews(key):
     reviews = [review for review in r.smembers(f"reviews:{key}")]
-    return reviews[0] if len(reviews) > 0 else ""
+    return reviews
+    # return reviews[0] if len(reviews) > 0 else ""
 
+def get_location(name):
+    return r.geosearch("locations", member=name, radius = "0", unit="km", withcoord = True )
 
 method_table = {}
 
@@ -36,7 +39,6 @@ def add(args):
     return ""
 
 
-
 @method("water-closets")
 def water_closets(args):
     output = [( name, long, lat, get_reviews(name)) for [name, (long, lat)] in geo_members("locations")]
@@ -45,7 +47,9 @@ def water_closets(args):
 
 @method("get")
 def get(args):
-    return get_reviews(args.get("name"))
+    name, (longitude, latitude) = get_location(args.get("name"))[0]
+    reviews = get_reviews(args.get("name"))
+    return json.dumps({ "name": name, "reviews": reviews, "latitude": latitude, "longitude": longitude })
 
 @method("getall")
 def get_all(args):
