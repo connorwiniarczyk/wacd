@@ -27,8 +27,7 @@ UI.add_button = async function() {
 
 	nextclick = await new Promise((resolve, reject) => MAP.once('click', resolve));
 	popup.new_wc(nextclick.latlng).openOn(MAP);
-	await new Promise((resolve, reject) => document.querySelector("form.new-wc").onsubmit = resolve)
-	console.log("resolved")
+	await new Promise((resolve, reject) => document.querySelector(".new-wc input.enter").onclick = resolve)
 
 	// extranew-wc ct data from form
 	name = document.querySelector(".new-wc input.name").value
@@ -40,6 +39,8 @@ UI.add_button = async function() {
 	if (name == "") { console.log("name cannot be empty"); return }
 
 	await API.add_wc({name, review, wc_location})
+
+	window.location = `/wc/${encodeURIComponent(name)}`;
 }
 
 
@@ -51,7 +52,7 @@ async function display_nearby(latitude, longitude) {
 
 // Add information about a watercloset to the map as a popup
 function add_wc_popup(map, wc) {
-	L.marker([wc.latitude, wc.longitude]).bindPopup(`<h2>${wc.name}</h2>\n${wc.review}<hr/><a href="/wc/${encodeURIComponent(wc.name)}">details</a>`).addTo(map)
+	L.marker([wc.latitude, wc.longitude]).bindPopup(`<a href="/wc/${encodeURIComponent(wc.name)}" style="text-decoration: none;"><h2>${wc.name}</h2></a>\n${wc.review[0]}<hr/><a href="/wc/${encodeURIComponent(wc.name)}">details</a>`).addTo(map)
 }
 
 function get_position() {

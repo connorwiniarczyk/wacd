@@ -5,7 +5,7 @@ const UI = {};
 
 // Add information about a watercloset to the map as a popup
 function add_wc_popup(map, wc) {
-	L.marker([wc.latitude, wc.longitude]).bindPopup(`<h2>${wc.name}</h2>\n${wc.review}`).addTo(map)
+	L.marker([wc.latitude, wc.longitude]).bindPopup(`<h2>${wc.name}</h2>\n${wc.review[0]}`).addTo(map)
 }
 
 
@@ -16,6 +16,22 @@ function populate(info) {
 	document.querySelector(".reviews").innerHTML = reviews;
 }
 
+function add_handlers() {
+	document.querySelector(".btn-new-review").onclick = function(){
+		document.querySelector(".add-review").setAttribute("data-state", "form")
+	};
+
+	document.querySelector("input.enter").onclick = async function(){
+		const review = document.querySelector("form.new-review textarea").value;
+		const name = decodeURI(document.querySelector("body").getAttribute("data-name"))
+
+		console.log({name, review})
+		await API.add_review({ name, review })
+
+		document.querySelector(".add-review").setAttribute("data-state", "default")
+		location.reload(true)
+	};
+}
 
 window.onload = async function(){
 
@@ -47,5 +63,6 @@ window.onload = async function(){
 
 
 	populate(info);
+	add_handlers();
 }
 

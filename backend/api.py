@@ -35,7 +35,14 @@ def method(name):
 @method("add")
 def add(args):
     r.geoadd("locations", (args.get("longitude"), args.get("latitude"), args.get("name")))
-    r.sadd(f"reviews:{args.get('name')}", args.get('review'))
+    if args.get('review') != "":
+        r.sadd(f"reviews:{args.get('name')}", args.get('review'))
+    return ""
+
+@method("add-review")
+def add_review(args):
+    if args.get('review') != "":
+        r.sadd(f"reviews:{args.get('name')}", args.get('review'))
     return ""
 
 

@@ -1,7 +1,3 @@
-.map-main {
-	height: 80vh;
-	width: 100%;
-}
 
 body {
 	--bg-color: #44BBEE;
@@ -83,8 +79,31 @@ ul.nearby-wcs li{
 	display: none;	
 }
 
-.map-focus {
+
+.add-review[data-state="default"] :not(.state-default) {
+	display: none;
+}
+
+.add-review[data-state="form"] > :not(.state-form) {
+	display: none;
+}
+
+.reviews .wc-review {
+	border-bottom: 1px solid #AAAAAA;
+	 
+	padding: 0.5rem 0;
+}
+
+
+
+
+.map--focus {
 	height: 100%;
+}
+
+.map--main {
+	height: 80vh;
+	/* width: 100%; */
 }
 
 .map-container {

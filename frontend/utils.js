@@ -17,6 +17,18 @@ API.add_wc = function({ name, review, wc_location }){
 	})
 }
 
+API.add_review = function({name, review}){
+	return window.fetch('/api/add-review', {
+		method: "post", 
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			name, review,
+		})
+	})
+}
+
 API.find = function({latitude, longitude}){
 	return window.fetch(`/api/find`, {
 		method: "post", 
@@ -52,7 +64,7 @@ popup.nearby = function(location, list) {
 } 
 
 popup.new_wc = function(location) {
-	const content = `<form action="#" class="new-wc"> <input class="name", required, type="text" style="width: 300px;" placeholder="Name"> <textarea class="review" rows="5", style="width: 100%;" placeholder="Review"></textarea> <input class="submit" type="submit" value="Submit"></form>`
+	const content = `<form class="new-wc"> <input class="name", required, type="text" style="width: 300px;" placeholder="Name"> <textarea class="review" rows="5", style="width: 100%;" placeholder="Review"></textarea> <input class="enter" type="button" value="Submit"></form>`
 	return L.popup()
 		.setContent(content)
 		.setLatLng(nextclick.latlng)

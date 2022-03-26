@@ -22,12 +22,20 @@
 			</header>	
 			<main>
 				<section class="map-container">
-					<div id="mapid" class="map-focus" data-state="default"></div>
+					<div id="mapid" class="map--focus" data-state="default"></div>
 				</section>
 
-				<section class="reviews">
-					test	
-				</section>
+				<section class="reviews"></section>
+
+
+				<div class="add-review" data-state="default">
+					<button class="btn-new-review state-default">+</button>
+					<form class="new-review state-form" style="display: flex; flex-direction: column; align-items: right;">
+						<textarea rows="8" placeholder="Review" style = "width: 100%; border: none; font-family: sans-serif;"></textarea>
+						<input class="enter" type="button" style="margin-top: 1rem;" value="Submit"/>
+					</form>
+				</div>
+
 			</main>
 
 
