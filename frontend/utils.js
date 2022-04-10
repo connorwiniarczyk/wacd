@@ -82,3 +82,16 @@ popup.default = function(location){
 		.setLatLng(location)
 		.setContent(content)
 }
+
+
+function get_template(id) {
+	const content = document.getElementById(id).innerHTML;
+
+	return {
+		resolve: function(data) {
+			const regex = /{{(\w+?)}}/g;
+			let new_content = content.replace(regex, (match, p1) => data[p1] || "");
+			console.log(new_content)
+		}
+	};
+}

@@ -19,6 +19,20 @@
 
 			<header class="header">
 				<h1 id="title"></h1>
+<!-- <di2605v class="stars"> -->
+<!--   <form action=""> -->
+<!--     <input class="star star-5" id="star-5" type="radio" name="star"/> -->
+<!--     <label class="star star-5" for="star-5"></label> -->
+<!--     <input class="star star-4" id="star-4" type="radio" name="star"/> -->
+<!--     <label class="star star-4" for="star-4"></label> -->
+<!--     <input class="star star-3" id="star-3" type="radio" name="star"/> -->
+<!--     <label class="star star-3" for="star-3"></label> -->
+<!--     <input class="star star-2" id="star-2" type="radio" name="star"/> -->
+<!--     <label class="star star-2" for="star-2"></label> -->
+<!--     <input class="star star-1" id="star-1" type="radio" name="star"/> -->
+<!--     <label class="star star-1" for="star-1"></label> -->
+<!--   </form> -->
+<!-- </div> -->
 			</header>	
 			<main>
 				<section class="map-container">
@@ -28,10 +42,22 @@
 				<section class="reviews"></section>
 
 
-				<div class="add-review" data-state="default">
+				<div class="add-review" data-state="form">
 					<button class="btn-new-review state-default">+</button>
 					<form class="new-review state-form" style="display: flex; flex-direction: column; align-items: right;">
-						<textarea rows="8" placeholder="Review" style = "width: 100%; border: none; font-family: sans-serif;"></textarea>
+						<textarea rows="5" placeholder="Review" style = "width: 100%; border: none; font-family: sans-serif;"></textarea>
+						<div class="stars">
+    <input class="star star-1" id="star-1" type="radio" name="star"/>
+    <label class="star star-1" for="star-1"></label>
+    <input class="star star-2" id="star-2" type="radio" name="star"/>
+    <input class="star star-3" id="star-3" type="radio" name="star"/>
+    <label class="star star-3" for="star-3"></label>
+    <label class="star star-2" for="star-2"></label>
+    <input class="star star-4" id="star-4" type="radio" name="star"/>
+    <label class="star star-4" for="star-4"></label>
+    <input class="star star-5" id="star-5" type="radio" name="star"/>
+    <label class="star star-5" for="star-5"></label>
+						</div>
 						<input class="enter" type="button" style="margin-top: 1rem;" value="Submit"/>
 					</form>
 				</div>

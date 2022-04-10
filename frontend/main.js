@@ -52,7 +52,13 @@ async function display_nearby(latitude, longitude) {
 
 // Add information about a watercloset to the map as a popup
 function add_wc_popup(map, wc) {
-	L.marker([wc.latitude, wc.longitude]).bindPopup(`<a href="/wc/${encodeURIComponent(wc.name)}" style="text-decoration: none;"><h2>${wc.name}</h2></a>\n${wc.review[0]}<hr/><a href="/wc/${encodeURIComponent(wc.name)}">details</a>`).addTo(map)
+	const star_rating = 4;
+	const star_string = Array(5).fill("")
+		.map((_, i) => i + 1 > star_rating ? "\u2606" : "\u2605")
+		.join("")
+	// const star_string = Array(star_rating).fill("\u2605").join("")
+
+	L.marker([wc.latitude, wc.longitude]).bindPopup(`<a href="/wc/${encodeURIComponent(wc.name)}" style="text-decoration: none;"><h2>${wc.name} <span style="float: right;">testt</span>${star_string}</h2></a>\n${wc.review[0]}<hr/><a href="/wc/${encodeURIComponent(wc.name)}">details</a>`).addTo(map)
 }
 
 function get_position() {
@@ -104,5 +110,8 @@ window.onload = async function(){
 	// register click events for the two buttons
 	document.getElementById("add").onclick = () => UI.add_button();
 	document.getElementById("find").onclick = () => UI.find_button();
+
+
+	get_template("template--wc-popup").resolve({ name: "HEY!", uri_name: "HEY!" })
 }
 
