@@ -9,10 +9,11 @@ UI.find_button = async function() {
 	//change the display state of the button deck
 	document.querySelector(".button-deck").setAttribute("data-state", "find")	
 
-	 //wait for the next time the user clicks on the map, when they do, store the
+	 // wait for the next time the user clicks on the map, when they do, store the
 	 // event in nextclick
-	nextclick = await new Promise((resolve, reject) => MAP.once('click', resolve))
+	const nextclick = await new Promise((resolve, reject) => MAP.once('click', resolve))
 	const {lat, lng} = nextclick.latlng;
+
 	display_nearby(lat, lng);
 
 	// set back
@@ -45,20 +46,43 @@ UI.add_button = async function() {
 
 
 async function display_nearby(latitude, longitude) {
-	const nearby = await API.find({latitude, longitude});
-	popup.nearby({lat: latitude, lng: longitude}, nearby).openOn(MAP)
+	const nearby = await API.find(latitude, longitude);
+	const list = nearby
+		.filter((_, i) => i < 8)
+		.map(x => resolve_template("#template--nearby-restrooms-element", {
+			rating: star_string(4),
+			distance: x.distance.toFixed(2),
+			name: x.name,
+		}))
+		.join("")
+
+	L.popup()
+		.setLatLng({lat: latitude, lng: longitude})
+		.setContent(resolve_template("#template--nearby-restrooms", {table: `<table>${list}</table>`}))
+		.openOn(MAP);
+
+	document.querySelector(".input--urgency").oninput = i => console.log(i.target.value)
+
+}
+
+
+function star_string(amount) {
+	const empty_star = "\u2606";
+	const full_star = "\u2605";
+	// const half_star = "\u2be8"; // supposed to be a half star but doesn't appear to be supported yet
+
+	return Array(5)
+		.fill("")
+		.map((_, i) => i + 1 > amount ? empty_star : full_star)
+		.join("")
 }
 
 
 // Add information about a watercloset to the map as a popup
 function add_wc_popup(map, wc) {
-	const star_rating = 4;
-	const star_string = Array(5).fill("")
-		.map((_, i) => i + 1 > star_rating ? "\u2606" : "\u2605")
-		.join("")
-	// const star_string = Array(star_rating).fill("\u2605").join("")
-
-	L.marker([wc.latitude, wc.longitude]).bindPopup(`<a href="/wc/${encodeURIComponent(wc.name)}" style="text-decoration: none;"><h2>${wc.name} <span style="float: right;">testt</span>${star_string}</h2></a>\n${wc.review[0]}<hr/><a href="/wc/${encodeURIComponent(wc.name)}">details</a>`).addTo(map)
+	L.marker([wc.latitude, wc.longitude])
+		.bindPopup(resolve_template("#template--wc-popup", { rating: star_string(3), ...wc }))
+		.addTo(map)
 }
 
 function get_position() {
@@ -104,14 +128,16 @@ window.onload = async function(){
 	}).addTo(MAP);
 
 	// Download Water Closet data from the API and add them to the map as popups
-	const water_closets = await API.get_water_closets()
+	const water_closets = await API.water_closets()
 	water_closets.forEach(wc => add_wc_popup(MAP, wc))
 
 	// register click events for the two buttons
 	document.getElementById("add").onclick = () => UI.add_button();
 	document.getElementById("find").onclick = () => UI.find_button();
 
+	console.log([1,2,3,4,5].map(star_string))
 
-	get_template("template--wc-popup").resolve({ name: "HEY!", uri_name: "HEY!" })
+	const [position, zoom] = default_view;
+	display_nearby(position[0], position[1]);
 }
 

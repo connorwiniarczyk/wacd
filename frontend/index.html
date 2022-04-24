@@ -19,12 +19,39 @@
 		<body>
 			<template id="template--wc-popup">
 				<h2><a href="/wc/{{uri_name}}">{{name}}</a></h2>
-				<p>{{review}}</p>
+				<p>
+					{{rating}}
+					<br>
+					{{review}}
+				</p>
 			</template>
+
+			<template id="template--nearby-restrooms-element">
+				<tr>
+					<td><a href="/wc/{{name}}">{{name}}</a></td>
+					<td>{{distance}}&nbsp;km</td>
+					<td class="star-string">{{rating}}</td>
+				</tr>
+			</template>
+
+			<template id="template--nearby-restrooms">
+				<h2>Nearby Restrooms</h2>
+				<input type="range" min="0" max="100" value="50" class="slider input--urgency">
+				<div class="nearby-list">{{table}}</div>
+			</template>
+
+			<!-- <template id="template--wc"> -->
+			<!-- 	<a href="/wc/${encodeURIComponent(wc.name)}" style="text-decoration: none;"> -->
+			<!-- 		<h2>${wc.name} <span style="float: right;">test</span>${star_string}</h2> -->
+			<!-- 	</a> -->
+			<!-- 	<p>${wc.review[0]}</p> -->
+			<!-- 	<hr/> -->
+			<!-- 	<a href="/wc/${encodeURIComponent(wc.name)}">details</a> -->
+			<!-- </template> -->
+
 
 			<header class="header">
 				<h1>WaCD</h1>
-				<!-- <h2>The Water Closet Directory</h2> -->
 			</header>	
 
 			<div class="button-deck" data-state="default">

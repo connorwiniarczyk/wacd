@@ -35,6 +35,18 @@ label.star:before {
 }
 
 
+.nearby-list table td {
+	padding: 0px 10px;
+}
+
+
+.star-string {
+	color: #1a5fb4;
+	font-size: 1.4em;
+
+}
+
+
 
 
 body {
